@@ -1,6 +1,11 @@
 package com.skessler.controller;
 
+import java.io.*;
 import java.util.List;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.skessler.exception.OrderNotFound;
@@ -106,5 +111,43 @@ public class OrderController {
         redirectAttributes.addFlashAttribute("message", message);
         return mav;
     }
+
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws javax.servlet.ServletException, java.io.IOException {
+
+        System.out.println("Start AcsServlet doPost");
+
+        response.setContentType("text/plain");
+        ServletInputStream inputStream = request.getInputStream();
+        ServletOutputStream outputStream = response.getOutputStream();
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+        String line = "";
+        String xmlString = "";
+        while ( (line = in.readLine()) != null ) {
+            System.out.println(xmlString );
+            xmlString += line + "\n";
+        }
+
+        try {
+            System.out.println("I am trying to save the file");
+            String thisFile = new String("xmlfile2" + ".xml");
+            Acsorders acsorders;
+            String message = "New order "+acsorders.getOrderdata()+" was successfully created.";
+            orderService.create(acsorders);
+        }
+        catch(IOException ioe)
+        {
+            System.out.println("i did something wrong");
+            System.out.println("IO error: " + ioe);
+        }
+        System.out.println("End acsServlet doPost");
+        return;
+    }
+}
+
+
 
 }
