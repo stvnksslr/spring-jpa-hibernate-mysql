@@ -1,4 +1,4 @@
-    String url = "https://yoururl.com"; 
+    String url = "https://localhost:8080"; 
 
     HttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
