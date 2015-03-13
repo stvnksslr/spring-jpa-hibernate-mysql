@@ -13,6 +13,9 @@
     <i>${message}</i><br/>
     <a href="${pageContext.request.contextPath}/shop/create.html">Create a new shop</a><br/>
     <a href="${pageContext.request.contextPath}/shop/list.html">View all shops</a><br/>
+
+    <a href="${pageContext.request.contextPath}/order/create.html">Create a new order</a><br/>
+    <a href="${pageContext.request.contextPath}/order/list.html">View all orders</a><br/>
 </p>
 </body>
 </html>

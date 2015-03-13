@@ -5,22 +5,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    <title>Edit Shop page</title>
+    <title>New order page</title>
 </head>
 <body>
-<h1>Edit Shop page</h1>
-<form:form method="POST" commandName="shop" action="${pageContext.request.contextPath}/shop/edit/${shop.id}.html" >
+<h1>New order page</h1>
+<form:form method="POST" commandName="order" action="${pageContext.request.contextPath}/order/create.html" >
     <table>
         <tbody>
         <tr>
-            <td>Shop name:</td>
-            <td><form:input path="name" /></td>
-            <td><form:errors path="name" cssStyle="color: red;"/></td>
+            <td>order name:</td>
+            <td><form:input path="orderdata" /></td>
+            <td><form:errors path="orderdata" cssStyle="color: red;"/></td>
         </tr>
         <tr>
             <td>Employees number:</td>
-            <td><form:input path="emplNumber" /></td>
-            <td><form:errors path="emplNumber" cssStyle="color: red;"/></td>
+            <td><form:input path="processed" /></td>
+            <td><form:errors path="processed" cssStyle="color: red;"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Create" /></td>

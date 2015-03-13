@@ -5,25 +5,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    <title>Shop List page</title>
+    <title>Order List page</title>
 </head>
 <body>
-<h1>Shop List page</h1>
+<h1>Order List page</h1>
 <table style="text-align: center;" border="1px" cellpadding="0" cellspacing="0" >
     <thead>
     <tr>
-        <th width="25px">id</th><th width="150px">company</th><th width="25px">employees</th><th width="50px">actions</th>
+        <th width="25px">id</th><th width="150px">order</th><th width="25px">processed</th><th width="50px">actions</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="shop" items="${shopList}">
+    <c:forEach var="order" items="${orderList}">
         <tr>
-            <td>${shop.id}</td>
-            <td>${shop.name}</td>
-            <td>${shop.emplNumber}</td>
+            <td>${order.id}</td>
+            <td>${order.orderData}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/shop/edit/${shop.id}.html">Edit</a><br/>
-                <a href="${pageContext.request.contextPath}/shop/delete/${shop.id}.html">Delete</a><br/>
+                <a href="${pageContext.request.contextPath}/order/edit/${order.id}.html">Edit</a><br/>
+                <a href="${pageContext.request.contextPath}/order/delete/${order.id}.html">Delete</a><br/>
             </td>
         </tr>
     </c:forEach>

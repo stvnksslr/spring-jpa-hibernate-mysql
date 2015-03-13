@@ -1,8 +1,12 @@
 package com.skessler.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
+
+import com.skessler.exception.OrderNotFound;
+import com.skessler.model.Acsorders;
+import com.skessler.service.OrderService;
+import com.skessler.validation.OrderValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,44 +20,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.skessler.exception.ShopNotFound;
-import com.skessler.model.Shop;
-import com.skessler.service.ShopService;
-import com.skessler.validation.ShopValidator;
 
 @Controller
-@RequestMapping(value="/shop")
-public class ShopController {
+@RequestMapping(value="/order")
+public class OrderController {
 
     @Autowired
-    private ShopService shopService;
+    private OrderService orderService;
 
     @Autowired
-    private ShopValidator shopValidator;
+    private OrderValidator orderValidator;
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        binder.setValidator(shopValidator);
+        binder.setValidator(orderValidator);
     }
 
     @RequestMapping(value="/create", method=RequestMethod.GET)
-    public ModelAndView newShopPage() {
-        ModelAndView mav = new ModelAndView("shop-new", "shop", new Shop());
+    public ModelAndView newOrderPage() {
+        ModelAndView mav = new ModelAndView("order-new", "order", new Acsorders());
         return mav;
     }
 
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public ModelAndView createNewShop(@ModelAttribute @Valid Shop shop,
+    public ModelAndView createNewOrder(@ModelAttribute @Valid Acsorders acsorders,
                                       BindingResult result,
                                       final RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors())
-            return new ModelAndView("shop-new");
+            return new ModelAndView("order-new");
 
         ModelAndView mav = new ModelAndView();
-        String message = "New shop "+shop.getName()+" was successfully created.";
+        String message = "New order "+acsorders.getOrderdata()+" was successfully created.";
 
-        shopService.create(shop);
+        orderService.create(acsorders);
         mav.setViewName("redirect:/index.html");
 
         redirectAttributes.addFlashAttribute("message", message);
@@ -61,47 +61,47 @@ public class ShopController {
     }
 
     @RequestMapping(value="/list", method=RequestMethod.GET)
-    public ModelAndView shopListPage() {
-        ModelAndView mav = new ModelAndView("shop-list");
-        List<Shop> shopList = shopService.findAll();
-        mav.addObject("shopList", shopList);
+    public ModelAndView orderListPage() {
+        ModelAndView mav = new ModelAndView("order-list");
+        List<Acsorders> acsordersList = orderService.findAll();
+        mav.addObject("acsordersList", acsordersList);
         return mav;
     }
 
     @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-    public ModelAndView editShopPage(@PathVariable Integer id) {
-        ModelAndView mav = new ModelAndView("shop-edit");
-        Shop shop = shopService.findById(id);
-        mav.addObject("shop", shop);
+    public ModelAndView editOrderPage(@PathVariable Integer id) {
+        ModelAndView mav = new ModelAndView("order-edit");
+        Acsorders acsorders = orderService.findById(id);
+        mav.addObject("acsorders", acsorders);
         return mav;
     }
 
     @RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
-    public ModelAndView editShop(@ModelAttribute @Valid Shop shop,
+    public ModelAndView editOrder(@ModelAttribute @Valid Acsorders acsorders,
                                  BindingResult result,
                                  @PathVariable Integer id,
-                                 final RedirectAttributes redirectAttributes) throws ShopNotFound {
+                                 final RedirectAttributes redirectAttributes) throws OrderNotFound {
 
         if (result.hasErrors())
-            return new ModelAndView("shop-edit");
+            return new ModelAndView("order-edit");
 
         ModelAndView mav = new ModelAndView("redirect:/index.html");
-        String message = "Shop was successfully updated.";
+        String message = "Order was successfully updated.";
 
-        shopService.update(shop);
+        orderService.update(acsorders);
 
         redirectAttributes.addFlashAttribute("message", message);
         return mav;
     }
 
     @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
-    public ModelAndView deleteShop(@PathVariable Integer id,
-                                   final RedirectAttributes redirectAttributes) throws ShopNotFound {
+    public ModelAndView deleteOrder(@PathVariable Integer id,
+                                   final RedirectAttributes redirectAttributes) throws OrderNotFound {
 
         ModelAndView mav = new ModelAndView("redirect:/index.html");
 
-        Shop shop = shopService.delete(id);
-        String message = "The shop "+shop.getName()+" was successfully deleted.";
+        Acsorders acsorders = orderService.delete(id);
+        String message = "The order "+acsorders.getOrderdata()+" was successfully deleted.";
 
         redirectAttributes.addFlashAttribute("message", message);
         return mav;
